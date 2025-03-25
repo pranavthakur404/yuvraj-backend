@@ -5,6 +5,9 @@ import Dealer from "../Model/Dealer.js";
 // Generic token verification middleware
 const verifyToken = (tokenName, role) => {
   return async (req, res, next) => {
+    console.log("cokkie", req.cookies);
+    console.log("header", req.headers);
+
     const token =
       (req.headers.authorization?.startsWith("Bearer ") &&
         req.headers.authorization.split(" ")[1]) ||
@@ -63,6 +66,7 @@ const verifyToken = (tokenName, role) => {
 // Admin authentication middleware
 export const isAuthenticated = (req, res, next) => {
   const adminAuth = req.cookies.adminAuth;
+
   if (!adminAuth || adminAuth !== "authenticated") {
     return res.status(401).json({
       message: "Unauthorized admin access",
